@@ -46,15 +46,15 @@ class Endpoint:
     def check_status_code_is_correct(self, status_code):
         assert self.response.status_code == status_code
 
-    @allure.step('Проверьте код состояния')
+    @allure.step('Проверяет код состояния')
     def check_status_code(self):
         assert self.response.status_code == 404
 
-    @allure.step('Убедитесь, что получена ошибка 400.')
+    @allure.step('Проверяет код состояния.')
     def check_status_code_is_bad_request(self, status_code):
         assert self.response.status_code == status_code
 
-    @allure.step('Проверить 401 error')
+    @allure.step('Проверяет код состояния')
     def check_status_code_is_unauthorized(self, status_code):
         assert self.response.status_code == status_code
 
