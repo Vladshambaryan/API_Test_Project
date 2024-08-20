@@ -1,15 +1,15 @@
 import pytest
 from endpoints.create_meme import CreateMeme
+from endpoints.endpoint import Endpoint
 from endpoints.update_meme import UpdateMeme
 from endpoints.get_meme import GetMeme
 from endpoints.get_all_memes import GetAllMemes
 from endpoints.delete_meme import DeleteMeme
-from endpoints.authorization import Authorization
 
 
 @pytest.fixture(scope='session')
 def auth():
-    return Authorization()
+    return Endpoint()
 
 
 @pytest.fixture(scope='session')

@@ -5,6 +5,7 @@ from requests.exceptions import JSONDecodeError
 
 
 class GetAllMemes(Endpoint):
+
     @allure.step('получить все мемы')
     def get_all_memes(self, token, headers=None):
         headers = headers if headers else self.get_headers(token)
