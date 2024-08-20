@@ -4,6 +4,7 @@ from .test_data import (TEST_DATA_CREATE, NEGATIVE_DATA_CREATE, NEGATIVE_DATA_UP
                         invalid_token)
 
 
+@pytest.mark.smoke
 @allure.title('Получите один мем')
 def test_get_one_meme(new_meme_id, get_request_meme, token):
     response = get_request_meme.get_meme_by_id(new_meme_id, token)
@@ -17,6 +18,7 @@ def test_get_one_meme(new_meme_id, get_request_meme, token):
         get_request_meme.check_response_is_list()
 
 
+@pytest.mark.smoke
 @allure.title('Получить все мемы')
 def test_get_all_meme(get_request_all_memes, token):
     response = get_request_all_memes.get_all_memes(token)
@@ -32,6 +34,7 @@ def test_get_all_meme(get_request_all_memes, token):
             get_request_all_memes.check_info_not_empty(meme)
 
 
+@pytest.mark.regression
 @allure.title('Создать новый мем')
 @pytest.mark.parametrize('data', TEST_DATA_CREATE)
 def test_add_meme(post_create_meme, data, token):
@@ -43,6 +46,7 @@ def test_add_meme(post_create_meme, data, token):
     post_create_meme.check_info_is_correct(data['info'])
 
 
+@pytest.mark.regression
 @allure.title('Создать новый мем - отрицательные тесты')
 @pytest.mark.parametrize('data', NEGATIVE_DATA_CREATE)
 def test_add_meme_with_negative_data(post_create_meme, data, token):
@@ -50,6 +54,7 @@ def test_add_meme_with_negative_data(post_create_meme, data, token):
     post_create_meme.check_status_code_400_is_bad_request()
 
 
+@pytest.mark.regression
 @allure.title('Обновить мем')
 def test_update_meme(new_meme_id, put_update_meme, token):
     data = TEST_DATA_UPDATE
@@ -62,6 +67,7 @@ def test_update_meme(new_meme_id, put_update_meme, token):
     put_update_meme.check_info_is_correct(data['info'])
 
 
+@pytest.mark.regression
 @allure.title('Обновление мема - негативный тест')
 @pytest.mark.parametrize('data', NEGATIVE_DATA_UPDATE)
 def test_update_meme_with_negative_data(put_update_meme, new_meme_id, data, token):
@@ -69,12 +75,14 @@ def test_update_meme_with_negative_data(put_update_meme, new_meme_id, data, toke
     put_update_meme.check_status_code_400_is_bad_request()
 
 
+@pytest.mark.regression
 @allure.title('Создать новый мем - неавторизованный пользователь')
 def test_add_meme_unauthorized(post_create_meme):
     post_create_meme.new_meme(TEST_DATA_CREATE[0], invalid_token)
     post_create_meme.check_status_code_401_is_unauthorized()
 
 
+@pytest.mark.regression
 @allure.title('Удаление мема')
 def test_delete_meme(new_meme_id, delete_meme, token):
     delete_meme.delete_meme_by_id(new_meme_id, token)
