@@ -47,7 +47,7 @@ def test_add_meme(post_create_meme, data, token):
 @pytest.mark.parametrize('data', NEGATIVE_DATA_CREATE)
 def test_add_meme_with_negative_data(post_create_meme, data, token):
     post_create_meme.new_meme(data, token)
-    post_create_meme.check_status_code_is_bad_request(status_code=400)
+    post_create_meme.check_status_code_400_is_bad_request()
 
 
 @allure.title('Обновить мем')
@@ -66,13 +66,13 @@ def test_update_meme(new_meme_id, put_update_meme, token):
 @pytest.mark.parametrize('data', NEGATIVE_DATA_UPDATE)
 def test_update_meme_with_negative_data(put_update_meme, new_meme_id, data, token):
     put_update_meme.make_changes_in_meme(new_meme_id, data, token)
-    put_update_meme.check_status_code_is_bad_request(status_code=400)
+    put_update_meme.check_status_code_400_is_bad_request()
 
 
 @allure.title('Создать новый мем - неавторизованный пользователь')
 def test_add_meme_unauthorized(post_create_meme):
     post_create_meme.new_meme(TEST_DATA_CREATE[0], invalid_token)
-    post_create_meme.check_status_code_is_unauthorized(status_code=401)
+    post_create_meme.check_status_code_401_is_unauthorized()
 
 
 @allure.title('Удаление мема')
@@ -80,4 +80,4 @@ def test_delete_meme(new_meme_id, delete_meme, token):
     delete_meme.delete_meme_by_id(new_meme_id, token)
     delete_meme.check_status_code_is_correct(status_code=200)
     delete_meme.delete_meme_by_id(new_meme_id, token)
-    delete_meme.check_status_code()
+    delete_meme.check_status_code_404()
