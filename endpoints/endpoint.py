@@ -42,39 +42,39 @@ class Endpoint:
             'Authorization': f'{token}'
         }
 
-    @allure.step('Проверьте код состояния')
+    @allure.step('Проверяет код состояния 200')
     def check_status_code_is_correct(self, status_code):
         assert self.response.status_code == status_code
 
-    @allure.step('Проверяет код состояния')
+    @allure.step('Проверяет код состояния 404')
     def check_status_code_404(self):
         assert self.response.status_code == 404
 
-    @allure.step('Проверяет код состояния.')
+    @allure.step('Проверяет код состояния 400')
     def check_status_code_400_is_bad_request(self):
         assert self.response.status_code == 400
 
-    @allure.step('Проверяет код состояния')
+    @allure.step('Проверяет код состояния 401')
     def check_status_code_401_is_unauthorized(self):
         assert self.response.status_code == 401
 
-    @allure.step('Проверить текст')
+    @allure.step('Проверяет текст')
     def check_text_is_correct(self, text):
         assert self.json is not None and self.json['text'] == text
 
-    @allure.step('Проверить url')
+    @allure.step('Проверяет url')
     def check_url_is_correct(self, url):
         assert self.json is not None and self.json['url'] == url
 
-    @allure.step('Проверить tags')
+    @allure.step('Проверяет tags')
     def check_tags_is_correct(self, tags):
         assert self.json is not None and self.json['tags'] == tags
 
-    @allure.step('Проверить info')
+    @allure.step('Проверяет info')
     def check_info_is_correct(self, info):
         assert self.json is not None and self.json['info'] == info
 
-    @allure.step('Проверить id')
+    @allure.step('Проверяет id')
     def check_id_is_correct(self, meme_id):
         assert self.json is not None and self.json['id'] == meme_id
 
@@ -92,21 +92,21 @@ class Endpoint:
         if not text:
             self.errors.append(f"Text в меме поле пусто: {meme}")
 
-    @allure.step('Проверьте URL-адрес не пуст')
+    @allure.step('Проверяет URL-адрес не пуст')
     def check_url_not_empty(self, meme):
         assert self.json is not None and isinstance(meme, dict)
         url = meme.get('url', '')
         if not url:
             self.errors.append(f"URL в меме поле пусто: {meme}")
 
-    @allure.step('Проверьте теги не пусто')
+    @allure.step('Проверяет теги не пусто')
     def check_tags_not_empty(self, meme):
         assert self.json is not None and isinstance(meme, dict)
         tags = meme.get('tags', '')
         if not tags:
             self.errors.append(f"Tags в меме поле пусто: {meme}")
 
-    @allure.step('Информация о проверке не пуста')
+    @allure.step('Проверяет информация не пуста')
     def check_info_not_empty(self, meme):
         assert self.json is not None and isinstance(meme, dict)
         info = meme.get('info', '')
