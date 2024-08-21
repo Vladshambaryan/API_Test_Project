@@ -1,4 +1,4 @@
-invalid_token = 'cregwergcwcg'
+invalid_token = 'iuriuyiuytiuyt'
 another_user_token = 'L2a8xedTtvSNYoh'
 
 TEST_DATA_CREATE = [
