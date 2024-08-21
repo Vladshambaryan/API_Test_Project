@@ -1,6 +1,6 @@
 import pytest
+from endpoints.authorization import Authorization
 from endpoints.create_meme import CreateMeme
-from endpoints.endpoint import Endpoint
 from endpoints.update_meme import UpdateMeme
 from endpoints.get_meme import GetMeme
 from endpoints.get_all_memes import GetAllMemes
@@ -9,7 +9,7 @@ from endpoints.delete_meme import DeleteMeme
 
 @pytest.fixture(scope='session')
 def auth():
-    return Endpoint()
+    return Authorization()
 
 
 @pytest.fixture(scope='session')

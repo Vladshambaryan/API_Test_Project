@@ -1,38 +1,15 @@
 import allure
 import requests
 
+
 class Endpoint:
+
     url = 'http://167.172.172.115:52355/meme'
     auth_url = 'http://167.172.172.115:52355/authorize'
-
     response = None
     json = None
     errors = []
     token = None
-
-    def is_token_alive(self, token):
-        response = requests.get(f'{self.auth_url}/{token}')
-        self.response = response
-        return response.status_code == 200
-
-    def authorization_token(self):
-        if self.token is None or not self.is_token_alive(self.token):
-            try:
-                response = requests.post(self.auth_url, json={"name": "Vlad"})
-                self.response = response
-                self.token = response.json().get('token')
-            except requests.exceptions.RequestException as exception:
-                print(f"Авторизация не удалась: {exception}")
-                self.token = None
-        return self.token
-
-    @allure.step('Проверить токен не пуст')
-    def check_token_not_empty(self):
-        assert self.token is not None
-
-    @allure.step('Проверить токен жив')
-    def check_token_is_alive(self):
-        assert self.is_token_alive(self.token)
 
     def get_headers(self, token=None):
         if token is None:
@@ -112,3 +89,16 @@ class Endpoint:
         info = meme.get('info', '')
         if not info:
             self.errors.append(f"Info в меме поле пусто: {meme}")
+
+    @allure.step('Проверить токен не пуст')
+    def check_token_not_empty(self):
+        assert self.token is not None
+
+    @allure.step('Проверить токен жив')
+    def check_token_is_alive(self):
+        assert self.is_token_alive(self.token)
+
+    def is_token_alive(self, token):
+        response = requests.get(f'{self.auth_url}/{token}')
+        self.response = response
+        return response.status_code == 200
