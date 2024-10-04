@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath('C:/Users/PC/PycharmProjects/API_Test_Project'))
+# sys.path.append(os.path.abspath('C:/Users/PC/PycharmProjects/API_Test_Project'))
 
 import pytest
 from endpoints.authorization import Authorization
