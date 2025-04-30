@@ -1,67 +1,76 @@
-name: Run autotests
+name: Python autotests
 
 on:
   workflow_dispatch:
     inputs:
       deployment_target:
-        description: select tests to run
-        type: choice
+        description: choose tests set
         required: true
+        type: choice
         default: smoke
         options:
-          - all
-          - regression
           - smoke
-
+          - regression
+          - extended
+          - all
+          
 permissions:
   contents: read
   pages: write
-  id-token: write
+  id-token: write         
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    name: run Tests
+    name: Run autotests
     steps:
-      - name: Check out source repository
+      - name: Checkout autotests
         uses: actions/checkout@v4
       - name: Set up Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-      - name: Install dependencies
+          python-version: '3.10'
+      - name: Install dependencies.
         run: pip install -r requirements.txt
-      - name: Run all tests
+        
+      - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: cd selenium_tests_eokulik && pytest -v --alluredir=results
+        run: pytest --alluredir=allure-results
         continue-on-error: true
-      - name: Run smoke tests
+        
+      - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: cd selenium_tests_eokulik && pytest -v -m smoke --alluredir=results
+        run: pytest -m smoke --alluredir=allure-results
         continue-on-error: true
-      - name: Run regression tests
+        
+      - name: run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: cd selenium_tests_eokulik && pytest -v -m regression --alluredir=results
+        run: pytest -m regression --alluredir=allure-results 
         continue-on-error: true
+        
+      - name: run extended tests
+        if: "github.event.inputs.deployment_target == 'extended'" 
+        run: pytest -m extended --alluredir=allure-results
+        continue-on-error: true
+
       - name: Install Java
         uses: actions/setup-java@v4
         with:
           distribution: 'microsoft'
           java-version: '17'
+          
       - name: Install Allure
-        run: |
-          sudo wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz && 
-          sudo tar -zxvf allure-2.32.0.tgz -C /opt/ && 
-          sudo ln -s /opt/allure-2.32.0/bin/allure /usr/bin/allure
+        run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.30.0/allure-2.30.0.tgz && sudo tar -zxvf allure-2.30.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.30.0/bin/allure /usr/bin/allure
       - name: Generate report
-        run: allure generate -c cd selenium_tests_eokulik/results -o _site
-      - name: Save report as artifact
+        run: allure generate -c allure-results -o _site
+        
+      - name: Save allure report
         uses: actions/upload-artifact@v4
         with:
           name: _site
           path: _site
-          retention-days: 1
-
+          retention-days: 1 
+          
   publish-report:
     name: Report publication
     runs-on: ubuntu-latest
@@ -70,7 +79,8 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
+        
