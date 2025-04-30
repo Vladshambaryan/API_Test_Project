@@ -25,7 +25,7 @@ jobs:
     name: Run autotests
     steps:
       - name: Checkout autotests
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4.6.2
       - name: Set up Python environment
         uses: actions/setup-python@v4
         with:
