@@ -26,10 +26,10 @@ jobs:
     name: Run autotests
     steps:
       - name: Checkout autotests
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
 
       - name: Set up Python environment
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
