@@ -9,6 +9,7 @@ on:
         type: choice
         default: smoke
         options:
+          - smoke
           - regression
           - all
 
@@ -43,7 +44,7 @@ jobs:
 
       - name: run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: pytest -m regression --alluredir=allure-results 
+        run: pytest -m regression --alluredir=allure-results
         continue-on-error: true
 
       - name: run extended tests
