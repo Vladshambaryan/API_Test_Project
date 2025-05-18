@@ -13,11 +13,7 @@ on:
           - regression
           - extended
           - all
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> 5b0019111ea63a0e80e66f040be4f4aba619702d
 permissions:
   contents: read
   pages: write
@@ -87,7 +83,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-<<<<<<< HEAD
-=======
-        
->>>>>>> 5b0019111ea63a0e80e66f040be4f4aba619702d
