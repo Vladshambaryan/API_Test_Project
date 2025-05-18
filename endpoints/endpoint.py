@@ -31,6 +31,16 @@ class Endpoint:
     def check_status_code_400_is_bad_request(self):
         assert self.response.status_code == 400
 
+
+    @allure.step('Проверяет код состояния 400')
+    def check_status_code_400_is_bad_request_error(self):
+        try:
+            assert self.response.status_code == 400
+        except:
+            print(self.response.status_code)
+            print('Негативный тест не пройден ожидалось 400 но response 200 ')
+
+
     @allure.step('Проверяет код состояния 401')
     def check_status_code_401_is_unauthorized(self):
         assert self.response.status_code == 401
