@@ -18,4 +18,5 @@
 ========================================================================
 
 Чек-лист API проверок
+https://docs.google.com/document/d/1GsS-px5V9qx3tiy7zM9ZvYdc3OblzpWLhVyOYUE6Fok/edit?tab=t.0
 
